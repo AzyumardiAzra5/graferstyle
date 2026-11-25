@@ -32,8 +32,6 @@ GraferStyle melayani kebutuhan dokumentasi visual untuk area Kuningan dan sekita
 
 **Website:** [Kunjungi GraferStyle](https://graferstyle.vercel.app)
 
-> Jika URL deployment berbeda, ubah tautan di atas sesuai alamat website yang aktif.
-
 ## Fitur Utama
 
 ### Halaman Publik
