@@ -238,18 +238,36 @@ function pasangAksiPaket() {
 
 const ADMIN_HALAMAN = { dashboard: adminDashboard, pesanan: adminPesanan, pendapatan: adminPendapatan, jadwal: adminJadwal, paket: adminPaket, portofolio: adminPortofolio, pelanggan: adminPelanggan };
 
+let adminSidePasang = false;
+
 function adminBangunKerangka() {
   const u = userAktif();
   APP.innerHTML = `<div class="d-flex flex-column flex-lg-row">
-  <aside class="gs-side p-3 flex-shrink-0">
-    <div class="d-flex align-items-center gap-2 py-3 mb-2 px-1"><img src="img/logo.png" class="gs-logo-img" alt=""><div><div class="font-display fw-semibold text-white lh-1" style="font-size:1.15rem">GraferStyle</div><div class="small" style="color:#A8C8B5">Panel Admin</div></div></div>
+  <div class="gs-side-latar" id="latarSide"></div>
+  <aside class="gs-side p-3 flex-shrink-0" id="sideAdmin">
+    <div class="d-flex align-items-center gap-2 py-3 mb-2 px-1"><img src="img/logo.png" class="gs-logo-img" alt=""><div><div class="font-display fw-semibold text-white lh-1" style="font-size:1.15rem">GraferStyle</div><div class="small" style="color:#A8C8B5">Panel Admin</div></div><button type="button" class="gs-side-tutup ms-auto" id="tutupSide" aria-label="Tutup menu"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
     <ul class="nav flex-column gap-1 flex-grow-1" id="menuAdmin"></ul>
     <div class="mt-4 pt-3" style="border-top:1px solid rgba(255,255,255,.12)"><div class="d-flex align-items-center gap-2 mb-3"><div class="gs-avatar">${inisial(u.nama)}</div><div class="text-white fw-semibold">${aman(u.nama)}</div></div>
     <a href="#admin" class="nav-link" id="keluarAdmin">${adminSvg("keluar")}Keluar</a></div>
   </aside>
-  <main class="flex-grow-1" style="min-width:0"><header class="gs-topbar"><div><div class="gs-topbar-judul font-display" id="judulHalaman">Dashboard</div></div><div class="gs-topbar-kanan d-flex align-items-center gap-3"><div class="dropdown gs-notif" data-gaya="btn-outline-primary"></div><span>${new Date().toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</span></div></header><div id="isiAdmin" class="gs-isi"></div></main>
+  <main class="flex-grow-1" style="min-width:0"><header class="gs-topbar"><div class="d-flex align-items-center gap-2"><button type="button" class="gs-side-buka" id="bukaSide" aria-label="Buka menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><div class="gs-topbar-judul font-display" id="judulHalaman">Dashboard</div></div><div class="gs-topbar-kanan d-flex align-items-center gap-3"><div class="dropdown gs-notif" data-gaya="btn-outline-primary"></div><span class="gs-topbar-tgl">${new Date().toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</span></div></header><div id="isiAdmin" class="gs-isi"></div></main>
 </div>`;
   ambil("keluarAdmin").onclick = (e) => { e.preventDefault(); tanyaKeluar(); };
+  const side = ambil("sideAdmin"), latar = ambil("latarSide");
+  const aturSide = (buka) => { side.classList.toggle("buka", buka); latar.classList.toggle("buka", buka); document.body.classList.toggle("gs-kunci", buka); };
+  ambil("bukaSide").onclick = () => aturSide(true);
+  ambil("tutupSide").onclick = () => aturSide(false);
+  latar.onclick = () => aturSide(false);
+  side.addEventListener("click", (e) => { if (e.target.closest("a.nav-link")) aturSide(false); });
+  if (!adminSidePasang) {
+    adminSidePasang = true;
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      document.querySelectorAll(".gs-side.buka, .gs-side-latar.buka").forEach((el) => el.classList.remove("buka"));
+      document.body.classList.remove("gs-kunci");
+    });
+    window.addEventListener("hashchange", () => document.body.classList.remove("gs-kunci"));
+  }
 }
 
 function adminTampil() {

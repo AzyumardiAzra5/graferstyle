@@ -54,7 +54,6 @@
 .gs-logo-img { height:36px; width:auto; }
 .gs-icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
 @media (min-width:992px) { .gs-side { position:sticky; top:0; height:100vh; align-self:flex-start; overflow-y:auto; } }
-@media (max-width:991px) { .gs-side { width:100%; min-height:0; } }
 .gs-fit { height:100vh; overflow:hidden; }
 .gs-fit .gs-field input { padding:.6rem 1rem .6rem 2.6rem; font-size:.9rem; } .gs-fit .form-label { margin-bottom:.2rem; } .gs-fit .mb-3 { margin-bottom:.7rem !important; }
 .gs-fit h1 { font-size:1.55rem !important; } .gs-fit .gs-btn-sage { padding:.65rem 1.2rem; }
@@ -231,3 +230,17 @@ a.gs-card:hover { transform:translateY(-6px); box-shadow:0 16px 30px rgba(20,37,
 .gs-notif-item { padding:.65rem 1rem; border-bottom:1px solid var(--gs-line); }
 .gs-notif-item.belum { background:#EEF4F0; border-left:3px solid var(--gs-emerald); }
 .gs-notif-waktu { font-size:.7rem; color:var(--gs-muted); margin-top:.15rem; }
+
+.gs-side-buka, .gs-side-tutup, .gs-side-latar { display:none; }
+@media (max-width:991px) {
+  aside.gs-side { position:fixed; top:0; left:0; bottom:0; height:100vh; height:100dvh; width:min(290px,84vw); min-height:0; z-index:1050; overflow-y:auto; transform:translateX(-102%); transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
+  aside.gs-side.buka { transform:none; box-shadow:12px 0 40px rgba(0,0,0,.35); }
+  .gs-side-latar { display:block; position:fixed; inset:0; z-index:1045; background:rgba(10,20,18,.55); backdrop-filter:blur(2px); opacity:0; pointer-events:none; transition:opacity .3s; }
+  .gs-side-latar.buka { opacity:1; pointer-events:auto; }
+  .gs-side-buka, .gs-side-tutup { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:.9rem; cursor:pointer; flex-shrink:0; padding:0; }
+  .gs-side-buka { border:1px solid #B5CDBF; background:#fff; color:#24483D; }
+  .gs-side-tutup { border:0; background:rgba(255,255,255,.1); color:#C9DDD0; }
+  .gs-side-buka svg, .gs-side-tutup svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; }
+  body.gs-kunci { overflow:hidden; }
+}
+@media (max-width:575.98px) { .gs-topbar-tgl { display:none; } }
